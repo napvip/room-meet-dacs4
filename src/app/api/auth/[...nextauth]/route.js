@@ -15,15 +15,15 @@ export const authOptions = {
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
-        // ...có thể thêm nhiều nhà cung cấp khác ở đây
+        
     ],
     callbacks: {
-        // Hàm callback được gọi khi người dùng đăng nhập thành công
+        // hàm callback được gọi khi người dùng đăng nhập thành công
         async signIn({ user, profile }) {
             await dbConnect();
             let dbUser = await User.findOne({ email: user.email });
 
-            // Nếu người dùng không tồn tại trong cơ sở dữ liệu, tạo tài khoản mới
+            // nếu người dùng không tồn tại trong cơ sở dữ liệu, tạo tài khoản mới
             if (!dbUser) {
                 dbUser = await User.create({
                     name: profile.name,
@@ -33,14 +33,14 @@ export const authOptions = {
                 });
             }
 
-            // Gán ID của người dùng từ cơ sở dữ liệu vào đối tượng user
+            // gán ID của người dùng từ cơ sở dữ liệu vào đối tượng user
             user.id = dbUser._id.toString();
             return true;
         }
     },
     session: {
-        strategy: 'jwt', // Sử dụng JWT để quản lý session
-        maxAge: 90 * 24 * 60 * 60 // Thời gian tồn tại của session là 90 ngày
+        strategy: 'jwt', // sử dụng JWT để quản lý session
+        maxAge: 90 * 24 * 60 * 60 // thời gian tồn tại của session là 90 ngày
     },
     pages: {
         signIn: '/user-auth', // Đường dẫn đến trang đăng nhập

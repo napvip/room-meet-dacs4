@@ -8,11 +8,13 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 
-//loadingloading
+
 const page = () => {
     const [isLoading, setIsLoading] = useState(false);
+
     const url = process.env.NEXTAUTH_URL;
 
+    //xoa tb 
     useEffect(() => {
         localStorage.removeItem('hasShownWelcome')
     }, [])
@@ -21,16 +23,16 @@ const page = () => {
         setIsLoading(true);
         try {
             await signIn(provider, { callbackUrl: url })
-            toast.info(`logging with ${provider} `)
+            toast.info(`Logging with ${provider} `)
         } catch (error) {
-            toast.error(`failed to login with ${provider}, please try again`)
+            toast.error(`Failed to login with ${provider}, please try again`)
         } finally {
             setIsLoading(false)
         }
     }
 
     return (
-        <div className="flex min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 dark:from-gray-900 dark:to-gray-800">
+        <div className="flex min-h-screen bg-gradient-to-r from-blue-100 to-gray-100 dark:from-gray-900 dark:to-gray-800">
             {isLoading && <Loader />}
             <div className="hidden w-1/2 bg-gray-100 lg:block">
                 <Image
@@ -43,7 +45,7 @@ const page = () => {
             </div>
             <div className="flex flex-col justify-center w-full p-8 lg:w-1/2">
                 <div className="max-w-md mx-auto">
-                    <h1 className="mb-4 text-4xl font-bold">Welcome to Google Meet</h1>
+                    <h1 className="mb-4 text-4xl font-bold">Welcome to VKU Meet</h1>
                     <p className="mb-8 text-gray-600 dark:textgray-100">
                         Connect with your team anytime, anywhere. Join or start meetings
                         with crystal-clear HD video and audio.

@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./Provider";
 import { SessionProvider } from "next-auth/react";
-import { metadata } from "./metadata"; // Import metadata
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,8 +19,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
+        <title>VKU Meet</title>
+        <meta name="description" content="VKU Meet" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

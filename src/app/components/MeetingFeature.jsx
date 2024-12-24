@@ -12,7 +12,7 @@ const slides = [
   {
     image: "https://www.gstatic.com/meet/user_edu_scheduling_light_b352efa017e4f8f1ffda43e847820322.svg",
     title: "Plan ahead",
-    description: "Click New meeting to schedule meetings in Google Calendar and send invites to participants",
+    description: "Click New meeting to schedule meetings in VKU Calendar and send invites to participants",
   },
   {
     image: "https://www.gstatic.com/meet/user_edu_safety_light_e04a2bbb449524ef7e49ea36d5f25b65.svg",

@@ -21,27 +21,32 @@ const MeetingAction = () => {
   const [generatedMeetingUrl, setGeneratedMeetingUrl] = useState('');
   const [meetingLink, setMeetingLink] = useState('');
 
-
+  //lay base url cua trang web dang dung luu vao state
   useEffect(() => {
     setBaseUrl(window.location.origin);
   }, [])
 
-  //tao cuoc hop cho sau
+  //tao cuoc hop cho sau nay
   const handleCreateMeetingForLater = () => {
-    const roomId = uuidv4();
-    console.log('Room ID:', roomId);
-    const url = `${baseUrl}/video-meeting/${roomId}`;
-    setGeneratedMeetingUrl(url);
-    setIsDialogOpen(true);
+    const roomId = uuidv4(); //tao chuoi id ngau nhien
+    // console.log('Room ID:', roomId);
+
+    const url = `${baseUrl}/video-meeting/${roomId}`;  //tao url cho cuoc hop vs id
+
+    setGeneratedMeetingUrl(url);  // set url generatedMeetingUrl
+    setIsDialogOpen(true);  //hien thi dialog link cuoc hop
     toast.success('Meeting created successfully');
   }
 
-  //join vao cuoc hop
+  //join vao cuoc hop link or code
   const handleJoinMeeting = () => {
     if (meetingLink) {
       setIsLoading(true);
+
+      //format link
       const formattedLink = meetingLink.includes('http')
         ? meetingLink : `${baseUrl}/video-meeting/${meetingLink}`;
+      
       router.push(formattedLink);
       toast.info('Joining meeting...');
     }
@@ -50,10 +55,13 @@ const MeetingAction = () => {
     }
   }
 
+  //bat dau cuoc hop ngay
   const handleStartMeeting = () => {
     setIsLoading(true);
     const roomId = uuidv4();
+
     const meetingUrl = `${baseUrl}/video-meeting/${roomId}`;
+    
     router.push(meetingUrl);
     toast.info('Starting meeting...');
   }

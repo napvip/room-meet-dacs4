@@ -12,7 +12,7 @@ const Header = () => {
   const { theme, setTheme } = useTheme();
   const { data: session } = useSession();
   console.log('Session:', session);
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
 
   const formatTimeDate = () => {
@@ -36,9 +36,9 @@ const Header = () => {
     <div className='flex items-center justify-between p-6 bg-white dark:bg-gray-900 border-b dark:border-gray-700 '>
       <div className='flex items-center space-x-4'>
         <Link href='/' className='flex items-center space-x-2'>
-          <Video className='w-8 h-8 text-blue-500' />
-          <span className='hidden md:block text-xl font-semibold text-gray-800 dark:text-white'>
-            Google Meet
+          <Video className='w-9 h-9 text-black' />
+          <span className='hidden md:block text-2xl font-semibold text-black dark:text-white'>
+            <span className='text-red-600'>V</span><span className='text-yellow-500'>K</span><span className='text-blue-700'>U</span> Meet
           </span>
         </Link>
       </div>
@@ -54,9 +54,7 @@ const Header = () => {
           )}
 
         </Button>
-        <Button variant="ghost" size='icon' className="hidden md:block">
-          <Info className='w-5 h-5 ml-2' />
-        </Button>
+
 
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
@@ -71,7 +69,7 @@ const Header = () => {
           <DropdownMenuContent align="end" className="w-80 p-4">
             <div className='flex justify-between items-center mb-2'>
               <span className='text-sm font-bold text-gray-800 dark:text-white'>
-                {session?.user?.email || "No email available"}
+                {session?.user?.email || ""}
               </span>
               <Button className="rounded-full p-4 " variant="ghost" size="icon" onClick={() => setOpen(false)}>
                 <X className='h-5 w-5 ' />

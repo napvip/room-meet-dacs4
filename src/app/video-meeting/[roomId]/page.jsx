@@ -6,10 +6,12 @@ import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import { toast } from 'react-toastify';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { ZegoSuperBoardManager } from "zego-superboard-web";
 
 const VideoMeeting = () => {
   const params = useParams();
   const roomID = params.roomId;
+
   const { data: session, status } = useSession();
   const router = useRouter();
   const containerRef = useRef(null) // ref for video container element
@@ -17,11 +19,14 @@ const VideoMeeting = () => {
   const [isInMeeting, setIsInMeeting] = useState(false);
 
 
+  //check ng dung dang nhap neu vao link cuoc hop
   useEffect(() => {
     if (status === 'authenticated' && session?.user?.name && containerRef.current) {
       joinMeeting(containerRef.current)
-    } else {
-      console.log('session is not authenticate .please login before use')
+    } 
+    else {
+      toast.error('Please login before join meeting')
+      router.push('/user-auth')
     }
   }, [session, status])
 
@@ -54,12 +59,13 @@ const VideoMeeting = () => {
       throw new Error('Failed to create Zego instance');
     }
     setZp(zegoInstance);
+
     // start the call
     zegoInstance.joinRoom({
       container: element,
       sharedLinks: [
         {
-          name: 'join via this link',
+          name: 'Join via this link',
           url: `${window.location.origin}/video-meeting/${roomID}`
         },
       ],
@@ -71,6 +77,8 @@ const VideoMeeting = () => {
       showTurnOffRemoteCameraButton: true,
       showTurnOffRemoteMicrophoneButton: true,
       showRemoveUserButton: true,
+      whiteboardConfig: {
+      },
       onJoinRoom: () => {
         toast.success('Meeting joined succesfully')
         setIsInMeeting(true);
@@ -93,17 +101,9 @@ const VideoMeeting = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
-      <div
-        className={`flex-grow flex flex-col md:flex-row relative ${isInMeeting ? "h-screen" : ""
-          }`}
-      >
-        <div
-          ref={containerRef}
-          className="video-container flex-grow"
-          style={{ height: isInMeeting ? "100%" : "calc(100vh - 4rem)" }}
-        ></div>
+      <div className={`flex-grow flex flex-col md:flex-row relative ${isInMeeting ? "h-screen" : ""}`}>
+        <div ref={containerRef} className="video-container flex-grow" style={{ height: isInMeeting ? "100%" : "calc(100vh - 4rem)" }}></div>
       </div>
-
     </div>
   );
 }
