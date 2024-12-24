@@ -90,7 +90,7 @@ const MeetingAction = () => {
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleStartMeeting}>
               <Plus className='w-4 h-4 mr-2' />
-              Star an instant meeting
+              Start an instant meeting
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
