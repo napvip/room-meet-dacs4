@@ -25,7 +25,7 @@ const VideoMeeting = () => {
       joinMeeting(containerRef.current)
     } 
     else {
-      toast.error('Please login before join meeting')
+      // toast.error('Please login before join meeting')
       router.push('/user-auth')
     }
   }, [session, status])
