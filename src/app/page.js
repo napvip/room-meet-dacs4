@@ -16,6 +16,7 @@ export default function Home() {
   useEffect(() => {
     if (status === 'authenticated') {
       setIsLoading(false);
+
       const hasShownWelcome = localStorage.getItem('hasShownWelcome');
       if (!hasShownWelcome) {
         toast.success(`Welcome back! ${session?.user?.name}!`)
@@ -29,6 +30,7 @@ export default function Home() {
   if (isLoding) {
     return <Loader />
   }
+  
   return (
     <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900">
       <Header />

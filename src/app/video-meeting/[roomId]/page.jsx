@@ -14,8 +14,11 @@ const VideoMeeting = () => {
 
   const { data: session, status } = useSession();
   const router = useRouter();
-  const containerRef = useRef(null) // ref for video container element
+
   const [zp, setZp] = useState(null)
+
+  const containerRef = useRef(null)
+
   const [isInMeeting, setIsInMeeting] = useState(false);
 
 
@@ -23,7 +26,7 @@ const VideoMeeting = () => {
   useEffect(() => {
     if (status === 'authenticated' && session?.user?.name && containerRef.current) {
       joinMeeting(containerRef.current)
-    } 
+    }
     else {
       // toast.error('Please login before join meeting')
       router.push('/user-auth')
@@ -35,7 +38,7 @@ const VideoMeeting = () => {
   useEffect(() => {
     return () => {
       if (zp) {
-        zp.destroy()
+        zp.destroy() // huy ket noinoi
       }
     }
   }, [zp])
@@ -46,19 +49,24 @@ const VideoMeeting = () => {
     // generate Kit Token
     const appID = Number(process.env.NEXT_PUBLIC_ZEGOAPP_ID);
     const serverSecret = process.env.NEXT_PUBLIC_ZEGO_SERVER_SECRET;
+
     if (!appID && !serverSecret) {
       throw new Error('please provide appId and secret key')
     }
 
+    // Authentication và API calls qua HTTP
+    //post
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, session?.user?.id || Date.now().toString(), session?.user?.name || 'Guest');
 
 
-    // Create instance object from Kit Token.
+    //Tạo instance và quản lý phòng họp qua server
     const zegoInstance = ZegoUIKitPrebuilt.create(kitToken);
     if (!zegoInstance) {
       throw new Error('Failed to create Zego instance');
     }
     setZp(zegoInstance);
+
+    zegoInstance.addPlugins({ ZegoSuperBoardManager });
 
     // start the call
     zegoInstance.joinRoom({
@@ -77,7 +85,11 @@ const VideoMeeting = () => {
       showTurnOffRemoteCameraButton: true,
       showTurnOffRemoteMicrophoneButton: true,
       showRemoveUserButton: true,
+      // onNetworkStatusQuality: (stats) => {
+      //   console.log("Loại kết nối:", stats.type);
+      // },
       whiteboardConfig: {
+        showAddImageButton: true,
       },
       onJoinRoom: () => {
         toast.success('Meeting joined succesfully')

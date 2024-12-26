@@ -22,7 +22,8 @@ const page = () => {
     const handleLogin = async (provider) => {
         setIsLoading(true);
         try {
-            await signIn(provider, { callbackUrl: url })
+            // Gọi signIn với provider (google/github)
+            await signIn(provider, { callbackUrl: url }) //next auth
             toast.info(`Logging with ${provider} `)
         } catch (error) {
             toast.error(`Failed to login with ${provider}, please try again`)
